@@ -1,139 +1,92 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PUBG Tournament</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
-  <header class="bg-blue-600 text-white p-4 text-center text-2xl font-bold">
-    PUBG PC Tournament
-  </header>
-
-  <main class="p-6 space-y-4">
-    <p class="text-lg">Welcome to the official PUBG tournament hub. Navigate below:</p>
-    <ul class="space-y-2">
-      <li><a href="points.html" class="text-blue-600 underline">View Points Table</a></li>
-      <li><a href="matches.html" class="text-blue-600 underline">View & Download Match IDs</a></li>
-      <li><a href="register.html" class="text-blue-600 underline">Register Your Team</a></li>
-    </ul>
-  </main>
-</body>
-</html>
-
-<!-- points.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Points Table</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50">
-  <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Points Table</h1>
-    <table class="min-w-full border border-gray-300">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="border px-4 py-2">Team</th>
-          <th class="border px-4 py-2">Kills</th>
-          <th class="border px-4 py-2">Placement</th>
-          <th class="border px-4 py-2">Total Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="border px-4 py-2">Team Alpha</td>
-          <td class="border px-4 py-2">12</td>
-          <td class="border px-4 py-2">2</td>
-          <td class="border px-4 py-2">24</td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2">Team Bravo</td>
-          <td class="border px-4 py-2">8</td>
-          <td class="border px-4 py-2">3</td>
-          <td class="border px-4 py-2">18</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</body>
-</html>
-
-<!-- matches.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Match IDs</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white p-6">
-  <h1 class="text-2xl font-bold mb-4">Match IDs</h1>
-  <ul id="match-list" class="mb-4 list-disc list-inside">
-    <li>Match 1 - ID: 12345678</li>
-    <li>Match 2 - ID: 23456789</li>
-    <li>Match 3 - ID: 34567890</li>
-  </ul>
-  <button onclick="downloadMatchIDs()" class="bg-blue-600 text-white px-4 py-2 rounded">Download Match IDs</button>
-
-  <script>
-    function downloadMatchIDs() {
-      const data = [
-        "Match 1 - ID: 12345678",
-        "Match 2 - ID: 23456789",
-        "Match 3 - ID: 34567890"
-      ].join("\n");
-
-      const blob = new Blob([data], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "match_ids.txt";
-      a.click();
-      URL.revokeObjectURL(url);
-    }
-  </script>
-</body>
-</html>
-
-<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register Team</title>
+  <title>PUBG Match Summary & Leaderboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-6">
-  <h1 class="text-2xl font-bold mb-4">Team Registration</h1>
-  <form action="https://formspree.io/f/xqaqpoqb" method="POST" class="space-y-4 bg-white p-6 rounded shadow">
-    <div>
-      <label class="block font-medium">Team Name</label>
-      <input type="text" name="teamName" class="w-full border p-2 rounded" required>
+<body class="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+
+  <header class="text-center py-6">
+    <h1 class="text-4xl font-bold">PUBG Tournament</h1>
+    <p class="text-lg mt-2">Match Summary and Points Leaderboard</p>
+  </header>
+
+  <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
+    
+    <!-- Match ID Section -->
+    <div class="mb-6">
+      <label class="block font-semibold text-gray-700 mb-2">Enter Match ID:</label>
+      <input id="matchId" type="text" placeholder="Paste Match ID here"
+             class="w-full p-3 border-2 border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600">
+      <button onclick="displayMatchId()" class="mt-3 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none">
+        Show Match ID
+      </button>
+      <p id="matchIdDisplay" class="mt-3 text-gray-600"></p>
     </div>
-    <div>
-      <label class="block font-medium">Player 1 Name & PUBG ID</label>
-      <input type="text" name="player1" class="w-full border p-2 rounded" required>
+
+    <!-- Points Table -->
+    <div class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4 text-center">Points Table</h2>
+      <table class="min-w-full border-collapse table-auto">
+        <thead class="bg-blue-100">
+          <tr>
+            <th class="border px-4 py-2">#</th>
+            <th class="border px-4 py-2">Team Name</th>
+            <th class="border px-4 py-2">Kills</th>
+            <th class="border px-4 py-2">Placement Points</th>
+            <th class="border px-4 py-2">Total Points</th>
+          </tr>
+        </thead>
+        <tbody id="pointsBody">
+          <tr class="bg-gray-50">
+            <td class="border px-4 py-2">1</td>
+            <td class="border px-4 py-2"><input type="text" placeholder="Team Name" class="w-full p-2 border-2 rounded-lg"></td>
+            <td class="border px-4 py-2"><input type="number" placeholder="Kills" class="w-full p-2 border-2 rounded-lg"></td>
+            <td class="border px-4 py-2"><input type="number" placeholder="Placement" class="w-full p-2 border-2 rounded-lg"></td>
+            <td class="border px-4 py-2" id="totalPoints">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <button onclick="calculatePoints()" class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none">Calculate Total Points</button>
     </div>
+
+    <!-- Kill Leaders -->
     <div>
-      <label class="block font-medium">Player 2 Name & PUBG ID</label>
-      <input type="text" name="player2" class="w-full border p-2 rounded">
+      <h2 class="text-2xl font-semibold mb-4 text-center">Kill Leaders</h2>
+      <ul id="killLeaders" class="bg-white border rounded p-6 space-y-2">
+        <li>1. PlayerX - 7 kills</li>
+        <li>2. PlayerY - 5 kills</li>
+        <li>3. PlayerZ - 5 kills</li>
+        <li>4. PlayerW - 4 kills</li>
+      </ul>
     </div>
-    <div>
-      <label class="block font-medium">Player 3 Name & PUBG ID</label>
-      <input type="text" name="player3" class="w-full border p-2 rounded">
-    </div>
-    <div>
-      <label class="block font-medium">Player 4 Name & PUBG ID</label>
-      <input type="text" name="player4" class="w-full border p-2 rounded">
-    </div>
-    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Submit Registration</button>
-  </form>
+
+  </div>
+
+  <script>
+    // Function to display Match ID after pasting
+    function displayMatchId() {
+      const matchId = document.getElementById('matchId').value;
+      document.getElementById('matchIdDisplay').textContent = `Match ID: ${matchId}`;
+    }
+
+    // Function to calculate total points
+    function calculatePoints() {
+      const rows = document.querySelectorAll('#pointsBody tr');
+      rows.forEach(row => {
+        const kills = row.querySelector('td:nth-child(3) input').value;
+        const placement = row.querySelector('td:nth-child(4) input').value;
+        const totalPointsCell = row.querySelector('td:nth-child(5)');
+        
+        // Simple calculation (e.g., kills + placement points)
+        if (kills && placement) {
+          const totalPoints = parseInt(kills) + parseInt(placement);
+          totalPointsCell.textContent = totalPoints;
+        }
+      });
+    }
+  </script>
 </body>
 </html>
